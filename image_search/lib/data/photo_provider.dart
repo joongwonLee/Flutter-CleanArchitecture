@@ -4,6 +4,11 @@ import 'package:flutter/cupertino.dart';
 import '../ui/home_view_model.dart';
 
 
+/// 상태관리를 위한 라이브러리: Bloc, Provider, GetX 등,,
+/// 아무 라이브러리를 사용하지 않는다면? InheritedWidget
+///
+/// * Provider를 사용하는 이유: view model 내의 상태를 모니터링하기 쉽게 만들기 위해
+
 class PhotoProvider extends InheritedWidget {
 
   final HomeViewModel viewModel;
