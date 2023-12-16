@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:image_search/data/photo_api_repository.dart';
 import '../model/Photo.dart';
 
-class PixabayApi {
+class PixabayApi implements PhotoApiRepository {
   final baseUrl = 'https://pixabay.com/api/';
   final key = '40944834-a8b088f37e0776293e80ed326';
 
