@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:image_search/data/photo_api_repository.dart';
-import '../model/Photo.dart';
+import '../model/photo.dart';
 
 class PixabayApi implements PhotoApiRepository {
   static const baseUrl = 'https://pixabay.com/api/';
