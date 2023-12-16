@@ -7,7 +7,6 @@ import '../data/photo_provider.dart';
 import '../model/photo.dart';
 
 class HomeScreen extends StatefulWidget {
-
   const HomeScreen({super.key});
 
   @override
@@ -25,8 +24,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    /**
+     * context.watch로 실시간으로 확인해서 view를 처음부터 다시 그리는 작업을 반복하는 것은 성능 상 좋지 x
+     * Consumer 사용해서 provider를 이용하면서도 필요한 ui만 그리기
+     */
     // final viewModel = Provider.of<HomeViewModel>(context); // 이전 방식
-    final viewModel = context.watch<HomeViewModel>(); // 요즘 방식?
+    // final viewModel = context.watch<HomeViewModel>(); // 요즘 방식?
 
     return Scaffold(
       appBar: AppBar(
@@ -50,33 +53,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 suffixIcon: IconButton(
                   onPressed: () async {
-                    viewModel.fetch(_controller.text);
+                    context.read<HomeViewModel>().fetch(_controller.text);
+                    // viewModel.fetch(_controller.text);
                   },
                   icon: Icon(Icons.search),
                 ),
               ),
             ),
           ),
-          StreamBuilder<List<Photo>>(
-            stream: viewModel.photoStream,
-            builder: (context, snapshot) {
-              if(!snapshot.hasData) {
-                return const CircularProgressIndicator();
-              }
-
-              final photos = snapshot.data!;
-
+          Consumer<HomeViewModel>(
+            builder: (_, viewModel, child) {
               return Expanded(
                 child: GridView.builder(
-                  padding: const EdgeInsets.all(16.0),
-                    itemCount: photos.length,
+                    padding: const EdgeInsets.all(16.0),
+                    itemCount: viewModel.photos.length,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 16,
                       mainAxisSpacing: 16,
                     ),
                     itemBuilder: (context, index) {
-                    final photo = photos[index];
+                      final photo = viewModel.photos[index];
                       return PhotoWidget(photo: photo);
                     }),
               );
