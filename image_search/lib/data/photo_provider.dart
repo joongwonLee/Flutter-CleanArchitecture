@@ -1,18 +1,14 @@
 
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
-import 'package:image_search/data/api.dart';
-import 'package:image_search/model/Photo.dart';
+
+import '../ui/home_view_model.dart';
+
 
 class PhotoProvider extends InheritedWidget {
-  final PixabayApi api;
-  List<Photo> _photos = [];
 
-  final _photoStreamController = StreamController<List<Photo>>()..add([]);
-  Stream<List<Photo>> get photoStream => _photoStreamController.stream;
+  final HomeViewModel viewModel;
 
-  PhotoProvider({required this.api, required super.child, super.key});
+  const PhotoProvider({required this.viewModel, required super.child, super.key});
 
   // 다른 위젯에 자유롭게 얹을 수 있는?? 구글링
   static PhotoProvider of(BuildContext context) {
@@ -21,14 +17,9 @@ class PhotoProvider extends InheritedWidget {
     return result!;
   }
 
-  Future<void> fetch(String query) async {
-    final result = await api.fetch(query);
-    _photoStreamController.add(result);
-  }
-
   @override
   bool updateShouldNotify(PhotoProvider oldWidget) {
-    return oldWidget.api != api;
+    return true;
   }
 
 }
