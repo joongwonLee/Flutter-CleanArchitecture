@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:image_search/data/data_source/result.dart';
 import 'package:image_search/domain/model/photo.dart';
 import 'package:image_search/domain/repository/photo_api_repository.dart';
+import 'package:image_search/domain/use_case/get_photos_use_case.dart';
 import 'package:image_search/presentation/home/home_view_model.dart';
 
 void main() {
@@ -14,7 +15,7 @@ void main() {
      *
      * Api에 대한 인터페이스(photo_api_repository)를 정의하고, 테스트 코드 작성 시에는 임의의 데이터를 적용
      */
-    final viewModel = HomeViewModel(FakePhotoApiRepository());
+    final viewModel = HomeViewModel(GetPhotosUseCase(FakePhotoApiRepository()));
 
     await viewModel.fetch('apple');
 

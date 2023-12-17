@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:image_search/domain/use_case/get_photos_use_case.dart';
 import 'package:image_search/presentation/home/home_ui_event.dart';
 
 import '../../data/data_source/result.dart';
@@ -10,7 +11,9 @@ import 'home_state.dart';
 
 /// ChangeNotifier: Provider를 사용할 때 view model 내 상태관리를 모니터링하기 위한 class
 class HomeViewModel with ChangeNotifier {
-  final PhotoApiRepository repository;
+
+  final GetPhotosUseCase getPhotosUseCase;
+  HomeViewModel(this.getPhotosUseCase);
 
   // get을 쓰는 이유: 내부에선 데이터의 변경을 가능하게 하고, 외부에서 데이터 수정을 막으려고
   // 자바에서 private 선언하고 get, set 함수 선언이랑 같은 용도인듯
@@ -27,13 +30,11 @@ class HomeViewModel with ChangeNotifier {
   final _eventController = StreamController<HomeUiEvent>();
   Stream<HomeUiEvent> get eventStream => _eventController.stream;
 
-  HomeViewModel(this.repository);
-
   Future<void> fetch(String query) async {
     _state = state.copyWith(isLoading: true);
     notifyListeners(); // 상태가 변할 때 해줘야 함
 
-    final Result<List<Photo>> result = await repository.fetch(query);
+    final Result<List<Photo>> result = await getPhotosUseCase(query); // 함수 call 참고 
 
     result.when(
       success: (photos) {
