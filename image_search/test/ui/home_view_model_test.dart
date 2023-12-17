@@ -21,7 +21,7 @@ void main() {
     final result = fakeJson.map((e) => Photo.fromJson(e)).toList();
 
     expect(
-        viewModel.photos, result
+        viewModel.state.photos, result
     );
   });
 }

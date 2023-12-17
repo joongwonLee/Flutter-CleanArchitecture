@@ -47,7 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
      * Consumer 사용해서 provider를 이용하면서도 필요한 ui만 그리기
      */
     // final viewModel = Provider.of<HomeViewModel>(context); // 이전 방식
-    // final viewModel = context.watch<HomeViewModel>(); // 요즘 방식?
+    final viewModel = context.watch<HomeViewModel>(); // 요즘 방식?
+    final state = viewModel.state;
 
     return Scaffold(
       appBar: AppBar(
@@ -79,18 +80,20 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          Consumer<HomeViewModel>(builder: (_, viewModel, child) {
+          state.isLoading
+          ? const CircularProgressIndicator()
+          : Consumer<HomeViewModel>(builder: (_, viewModel, child) {
             return Expanded(
               child: GridView.builder(
                   padding: const EdgeInsets.all(16.0),
-                  itemCount: viewModel.photos.length,
+                  itemCount: state.photos.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
                   ),
                   itemBuilder: (context, index) {
-                    final photo = viewModel.photos[index];
+                    final photo = state.photos[index];
                     return PhotoWidget(photo: photo);
                   }),
             );
