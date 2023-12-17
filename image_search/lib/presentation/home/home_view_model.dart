@@ -2,8 +2,9 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
-import 'package:image_search/data/photo_api_repository.dart';
-import '../model/photo.dart';
+
+import '../../domain/model/photo.dart';
+import '../../domain/repository/photo_api_repository.dart';
 
 /// ChangeNotifier: Provider를 사용할 때 view model 내 상태관리를 모니터링하기 위한 class
 class HomeViewModel with ChangeNotifier {

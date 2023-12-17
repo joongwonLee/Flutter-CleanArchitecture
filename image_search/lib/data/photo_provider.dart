@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 
-import '../ui/home_view_model.dart';
+import '../presentation/home/home_view_model.dart';
 
 
 /// 상태관리를 위한 라이브러리: Bloc, Provider, GetX 등,,
