@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:image_search/data/data_source/pixabay_api.dart';
-import 'package:image_search/data/repository/photo_api_repository_impl.dart';
-import 'package:image_search/domain/use_case/get_photos_use_case.dart';
+import 'package:image_search/di/provider_setup.dart';
 import 'package:image_search/presentation/home/home_screen.dart';
-import 'package:image_search/presentation/home/home_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: globalProviders,
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -22,10 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ChangeNotifierProvider(
-        create: (_) => HomeViewModel(GetPhotosUseCase(PhotoApiRepositoryImpl(PixabayApi(http.Client())))),
-        child: const HomeScreen(),
-      ),
+      home: const HomeScreen(),
     );
   }
 }

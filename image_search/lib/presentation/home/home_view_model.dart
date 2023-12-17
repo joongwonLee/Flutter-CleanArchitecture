@@ -6,7 +6,6 @@ import 'package:image_search/presentation/home/home_ui_event.dart';
 
 import '../../data/data_source/result.dart';
 import '../../domain/model/photo.dart';
-import '../../domain/repository/photo_api_repository.dart';
 import 'home_state.dart';
 
 /// ChangeNotifier: Provider를 사용할 때 view model 내 상태관리를 모니터링하기 위한 class
@@ -34,7 +33,7 @@ class HomeViewModel with ChangeNotifier {
     _state = state.copyWith(isLoading: true);
     notifyListeners(); // 상태가 변할 때 해줘야 함
 
-    final Result<List<Photo>> result = await getPhotosUseCase(query); // 함수 call 참고 
+    final Result<List<Photo>> result = await getPhotosUseCase(query); // 함수 call 참고
 
     result.when(
       success: (photos) {
